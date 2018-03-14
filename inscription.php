@@ -50,10 +50,10 @@ $_SESSION['emailFocus'] = false;
                             $req->bindParam(':pass', $hashedpass);
                             $req->bindParam(':email', $email);
                             $req->execute();
-                            // header('Location: signin.php');
                             $pseudo = NULL;
                             $email = NULL;
                             $pass = NULL;
+                            header('Location: signin.php');
                         } else {
                             $message = 'Ce pseudo est déjà utilisé';
                             $pseudo = NULL;
