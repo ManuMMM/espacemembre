@@ -79,9 +79,9 @@ $_SESSION['emailFocus'] = false;
         <form action="inscription.php" method="post">
             <p>
                 <label for="pseudo">Pseudonyme souhaité:</label><input type="text" name="pseudo" id="pseudo" <?php if(isset($pseudo) && !isset($count)) { echo 'value="'.$_POST['pseudo'].'"';} else { echo 'placeholder="Pseudo souhaité"'; } ?> <?php if($_SESSION['pseudoFocus'] || (!$_SESSION['passFocus'] && !$_SESSION['emailFocus'])) { ?> autofocus <?php } ?> required/><br>
-                <label for="message">Mot de passe:</label><input type="password" name="pass" id="pass" <?php if(isset($pass) && $pass == $passConfirmation) { echo 'value="'.$_POST['pass'].'"';} else { echo 'placeholder="Mot de passe"'; } ?> <?php if($_SESSION['passFocus']) { ?> autofocus <?php } ?> required/><br>
-                <label for="message">Confirmation du mot de passe:</label><input type="password" name="passconfirmation" id="passconfirmation" placeholder="Mot de passe" required/><br>
-                <label for="message">Adresse e-mail:</label><input type="text" name="email" id="email" <?php if(isset($email) && preg_match("#^[a-z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,4}$#", $email)) { echo 'value="'.$_POST['email'].'"';} else { echo 'placeholder="Adresse e-mail"'; } ?> <?php if($_SESSION['emailFocus']) { ?> autofocus <?php } ?> required/><br><br>
+                <label for="pass">Mot de passe:</label><input type="password" name="pass" id="pass" <?php if(isset($pass) && $pass == $passConfirmation) { echo 'value="'.$_POST['pass'].'"';} else { echo 'placeholder="Mot de passe"'; } ?> <?php if($_SESSION['passFocus']) { ?> autofocus <?php } ?> required/><br>
+                <label for="passconfirmation">Confirmation du mot de passe:</label><input type="password" name="passconfirmation" id="passconfirmation" placeholder="Mot de passe" required/><br>
+                <label for="email">Adresse e-mail:</label><input type="text" name="email" id="email" <?php if(isset($email) && preg_match("#^[a-z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,4}$#", $email)) { echo 'value="'.$_POST['email'].'"';} else { echo 'placeholder="Adresse e-mail"'; } ?> <?php if($_SESSION['emailFocus']) { ?> autofocus <?php } ?> required/><br><br>
                 <input type="submit" value="Envoyer" />
             </p>
         </form>
