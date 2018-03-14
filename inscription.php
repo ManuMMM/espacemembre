@@ -88,6 +88,9 @@ $_SESSION['login'] = '';
                 <label for="email">Adresse e-mail:</label><input type="text" name="email" id="email" pattern="^[a-z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,4}$" <?php if(isset($email) && preg_match("#^[a-z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,4}$#", $email)) { echo 'value="'.$_POST['email'].'"';} else { echo 'placeholder="Adresse e-mail"'; } ?> <?php if($_SESSION['emailFocus']) { ?> autofocus <?php } ?> required/><br><br>
                 <input type="submit" value="Envoyer" />
             </p>
+            <p>
+                <button><a href="signin.php">Se connecter</a></button>
+            </p>
         </form>
     </body>
 </html>
