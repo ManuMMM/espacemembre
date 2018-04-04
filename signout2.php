@@ -23,9 +23,23 @@
         // Destroy the session.
         session_destroy();
         // ------------------------------------------------------------------------------------------------
+        
+        // Delete the session cookies
+        // http://php.net/manual/fr/function.setcookie.php
+        if (isset($_COOKIE['tokenSession'])) {
+            unset($_COOKIE['tokenSession']);
+            // empty value and old timestamp
+            setcookie('tokenSession', '', time() - 3600, null, null, false, true);
+            
+        }
+        if (isset($_COOKIE['pseudo'])) {
+            unset($_COOKIE['pseudo']);
+            // empty value and old timestamp
+            setcookie('pseudo', '', time() - 3600, null, null, false, true);
+        }
         // Redirection vers la page d'inscription
         header('Location: signin.php');
-        
+  
     }else{ // If not connected, redirection to the incription page
         header('Location: inscription.php');
     }

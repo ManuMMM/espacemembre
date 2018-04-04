@@ -30,8 +30,8 @@ session_start();
                 $req = $db->prepare('SELECT pseudo FROM membres WHERE pseudo = :pseudo '); // Prepare a request to look in the "pseudo" column from the "membres" table where the pseudo matches the pseudo submitted by the user
                 $req->bindParam(':pseudo', $pseudo); 
                 $req->execute();
-                $req->closeCursor();
                 $count = $req->rowCount(); // Do rowCount() on the request, it returns a value > 0 if there is a match. We stock in a variable $count
+                $req->closeCursor();
                 if($count != 0) // Check the existence of the a result
                 {
                     $req = $db->prepare('SELECT id, pass FROM membres WHERE pseudo = :pseudo '); // Prepare a request to look in the "pass" column from the "membres" table where the pseudo matches the pseudo submitted by the user
@@ -45,6 +45,19 @@ session_start();
                     {
                         $_SESSION['id'] = $data['id'];
                         $_SESSION['pseudo'] = $pseudo;
+                        $length = 32;
+                        $token = bin2hex(random_bytes($length));
+                        $token_connection = password_hash($token, PASSWORD_DEFAULT);
+                        $req = $db->prepare("UPDATE membres SET token_connection = :tokenConnection WHERE pseudo = :pseudo");
+                        $req->bindParam(':tokenConnection', $token_connection);
+                        $req->bindParam(':pseudo', $pseudo);
+                        $req->execute();
+                        $req->closeCursor();
+                        $_SESSION['logged'] = $token;
+                        if($_POST['rememberMe']){
+                            setcookie('tokenSession', $token, time() + 365*24*3600, null, null, false, true);
+                            setcookie('pseudo', $pseudo, time() + 365*24*3600, null, null, false, true);
+                        }
                         header('Location: Accueil.php');
                     } else {
                         $_SESSION['pass'] = '';
@@ -64,6 +77,7 @@ session_start();
                 <label for="pseudo">Login:</label><input type="text" name="pseudo" id="pseudo" <?php if(isset($_SESSION['login'])) { echo 'value="'.$_SESSION['login'].'"';} else { echo 'placeholder="Identifiant"'; } ?> autofocus autocomplete required/><br>
                 <label for="pass">Mot de passe:</label><input type="password" name="pass" id="pass" <?php if(isset($_SESSION['pass'])) { echo 'value="'.$_SESSION['pass'].'"';} else { echo 'placeholder="Mot de passe"'; } ?> required/><br>
                 <input type="checkbox" name="rememberMe" id="rememberMe"><label for="rememberMe">Se souvenir de moi</label>
+                <input type="hidden" name="token" id="token" value="<?php echo $token; ?>" />
                 <input type="submit" value="Se connecter" />
             </p>
         </form>

@@ -6,7 +6,7 @@
             $host = 'localhost';
             $database = 'espacemembres';
             $identifiant = 'root';
-            $password = 'root';
+            $password = '';
             $db = new PDO('mysql:host='.$host.';dbname='.$database.';charset=utf8', $identifiant, $password);
             $db->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
             $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
